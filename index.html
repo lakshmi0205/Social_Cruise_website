@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Cruise Website</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+
+        header {
+            background-color: #ff6f61;
+            color: white;
+            text-align: center;
+            padding: 1em;
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .product {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            width: 200px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background-color: #ff6f61;
+            color: white;
+            text-align: center;
+            padding: 1em;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        #cartCount {
+            color: #fff;
+            background-color: #333;
+            padding: 5px 10px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Social Cruise Website</h1>
+</header>
+
+<nav>
+    <a href="#" onclick="showCategory('default')">Home</a>
+    <a href="#" onclick="showCategory('electronics')">Electronics</a>
+    <a href="#" onclick="showCategory('clothing')">Clothing</a>
+    <a href="#" onclick="showCategory('vegetables')">Vegetables</a>
+    <a href="cart.html">Cart <span id="cartCount">0</span></a>
+</nav>
+
+<section id="products">
+    <!-- Product items will be dynamically added here using JavaScript -->
+</section>
+
+<footer>
+    <p>&copy; 2023 Colorful Website. All rights reserved.</p>
+</footer>
+
+<script>
+    const cartCount = document.getElementById('cartCount');
+    let cartTotal = 0;
+
+    // Dummy function to add a product to the cart
+    function addToCart(productName, productPrice) {
+        cartTotal++;
+        cartCount.innerText = cartTotal;
+        alert(`Added ${productName} to the cart. Total Price: $${productPrice.toFixed(2)}`);
+    }
+
+    // Function to show products based on category
+    function showCategory(category) {
+        const productsContainer = document.getElementById('products');
+        productsContainer.innerHTML = '';
+
+        let categoryProducts;
+
+        if (category === 'default') {
+            // Default category (you can set it to any default category)
+            categoryProducts = [
+                { name: 'washing machine', price: 999.99, image: 'https://etimg.etb2bimg.com/photo/94386374.cms' },
+                { name: 'Fan', price: 399.99, image: 'https://freepngimg.com/save/49691-ceiling-fan-hd-download-hd-png/1500x781' }
+            ];
+        } else if (category === 'electronics') {
+            categoryProducts = [
+                { name: 'Laptop', price: 999.99, image: 'https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bGFwdG9wc3xlbnwwfHwwfHx8MA%3D%3D' },
+                { name: 'Smartphone', price: 399.99, image: 'https://m.media-amazon.com/images/I/71bcl7VlwVL.jpg' },
+                { name: 'Tablet', price: 299.99, image: 'https://www.lenovo.com/medias/lenovo-tab-m10-hd-hero.png?context=bWFzdGVyfHJvb3R8Mjg3MTA3fGltYWdlL3BuZ3xoNTMvaDRmLzk5ODU1ODEwNTYwMzAucG5nfGU4NDcyNGQ0MGE0Y2JiOTQxNDNiNmJkNjE4YzNkMmE3YjRlNDY5ZGQwYTUxZmQ3NmUzN2M5NzNhY2NkZmFhZjE' },
+                { name: 'Headphones', price: 79.99, image: 'https://cdn.pixabay.com/photo/2023/05/27/08/20/headphones-8021022_1280.jpg' }
+            ];
+        } else if (category === 'clothing') {
+            categoryProducts = [
+                { name: 'T-Shirt', price: 19.99, image: 'https://ttbazaar.com/cdn/shop/products/TS-078_PO3_WSB.jpg?v=1623062160' },
+                { name: 'Jeans', price: 49.99, image: 'https://thumbs.dreamstime.com/b/jeans-i-have-been-wearing-years-35946947.jpg' }
+            ];
+        } else if (category === 'vegetables') {
+            categoryProducts = [
+                { name: 'Carrot', price: 1.99, image: 'https://media.istockphoto.com/id/185275579/photo/bundles-of-organic-carrots-with-the-stems-still-attached.webp?b=1&s=170667a&w=0&k=20&c=tlOo0x-fKU2H1tz58_11VC2tiZwlDYf-icMR5dZviDU=' },
+                { name: 'Broccoli', price: 2.99, image: 'https://media.istockphoto.com/id/518951178/photo/fresh-raw-green-broccoli-in-bowl.jpg?s=2048x2048&w=is&k=20&c=h5s9Qu1QDhtkFCMvu9j9u6CfdDSuuGey9k9gzVjdIts=' }
+            ];
+        }
+
+        categoryProducts.forEach(product => {
+            const productElement = createProductElement(product);
+            productsContainer.appendChild(productElement);
+        });
+    }
+
+    // Function to create product elements
+    function createProductElement(product) {
+        const productElement = document.createElement('div');
+        productElement.classList.add('product');
+        productElement.innerHTML = `
+            <h2>${product.name}</h2>
+            <img src="${product.image}" alt="${product.name}">
+            <p>$${product.price.toFixed(2)}</p>
+            <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+        `;
+        return productElement;
+    }
+
+    // Initial display (default category)
+    showCategory('default');
+</script>
+
+</body>
+</html>
